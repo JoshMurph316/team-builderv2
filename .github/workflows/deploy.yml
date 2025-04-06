@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       # Checkout the code
       - name: Checkout repository
@@ -17,7 +18,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '22.13.0'
+          node-version: '16'  # Specify the Node version you are using (adjust as needed)
+
+      # Install Angular CLI globally
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
 
       # Install dependencies
       - name: Install dependencies
@@ -25,7 +30,7 @@ jobs:
 
       # Build the application for SSR (Server-Side Rendering)
       - name: Build for SSR
-        run: npm run build:ssr
+        run: npm run build:ssr -- --configuration production
 
       # Install Firebase tools
       - name: Install Firebase CLI
