@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "y",
+    "public": "dist/team-builder-v2",
     "ignore": [
       "firebase.json",
       "**/.*",
