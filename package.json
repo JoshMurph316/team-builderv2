@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "build:ssr": "ng build --prod && ng run team-builder-v2:server",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
