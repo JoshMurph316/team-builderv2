@@ -20,13 +20,11 @@ jobs:
         with:
           node-version: '16'  # Specify the Node version you are using (adjust as needed)
 
-      # Install Angular CLI globally
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
-
-      # Install dependencies
+      # Install dependencies including Angular CLI locally
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm install -g @angular/cli  # Install Angular CLI globally (this should resolve the ng command issue)
 
       # Build the application for SSR (Server-Side Rendering)
       - name: Build for SSR
