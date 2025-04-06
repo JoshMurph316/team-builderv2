@@ -1,0 +1,34 @@
+name: Deploy to Firebase
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22.13.0' 
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Build the application for SSR (Server-Side Rendering)
+      - name: Build for SSR
+        run: npm run build:ssr
+
+      # Deploy to Firebase
+      - name: Deploy to Firebase
+        uses: wzieba/Firebase-Action@v2
+        with:
+          firebase_token: ${{ secrets.FIREBASE_TOKEN }}
