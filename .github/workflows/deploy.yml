@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       # Checkout the code
       - name: Checkout repository
@@ -18,22 +17,26 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'  # Specify the Node version you are using (adjust as needed)
+          node-version: '22.x'
 
-      # Install dependencies including Angular CLI locally
+      # Install dependencies
       - name: Install dependencies
-        run: |
-          npm install
-          npm install -g @angular/cli  # Install Angular CLI globally (this should resolve the ng command issue)
+        run: npm install
+
+      # Install Angular CLI
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
 
       # Build the application for SSR (Server-Side Rendering)
       - name: Build for SSR
-        run: npm run build:ssr -- --configuration production
+        run: npm run build:ssr
 
-      # Install Firebase tools
+      # Install Firebase CLI
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      # Deploy to Firebase
+      # Firebase CLI deployment (after SSR build)
       - name: Deploy to Firebase
-        run: firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
