@@ -1,5 +1,3 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
 # Compiled output
 /dist
 /tmp
@@ -10,6 +8,15 @@
 /node_modules
 npm-debug.log
 yarn-error.log
+
+# Firebase service account keys and config files
+firebase-service-account.json
+firebase-config.json
+
+# Environment variables (local development secrets)
+.env
+.env.local
+.env.*.local
 
 # IDEs and editors
 .idea/
@@ -36,7 +43,32 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
+data/*.xlsx
 
 # System files
 .DS_Store
 Thumbs.db
+
+# Generated JSON files
+src/assets/*.json
+data/*.json
+
+# Yarn and npm cache
+.yarn-cache/
+.npm/
+
+# Log files
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# IntelliJ IDEA
+.idea/
+
+# Eclipse IDE
+.project
+.classpath
+
+# Custom build files
+*.bak
+*.swp
