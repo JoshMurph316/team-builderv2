@@ -4,6 +4,9 @@ import re
 import time
 import os
 import argparse  # For parsing command line arguments
+import firebase_admin
+from firebase_admin import credentials, firestore
+from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -20,6 +23,30 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Web Scraper for Marvel Strike Force Characters")
     parser.add_argument("-testing", type=int, help="Number of characters to scrape for testing", default=None)
     return parser.parse_args()
+
+# Example of how to upload data to Firestore
+def upload_to_firestore(data, collection_name):
+    """
+    Uploads the given data to Firestore in the specified collection.
+    """
+    collection_ref = db.collection(collection_name)
+    for item in data:
+        collection_ref.add(item)
+
+# Load environment variables from the .env file
+load_dotenv()
+
+# Get the Firebase service account key path from the environment variable
+service_account_path = os.getenv("FIREBASE_SERVICE_ACCOUNT_PATH")
+log("Firebase service account path: " + service_account_path)
+
+# Initialize Firebase Admin SDK
+cred = credentials.Certificate(service_account_path)
+firebase_admin.initialize_app(cred)
+
+# Initialize Firestore
+db = firestore.client()
+log("Firebase Admin SDK initialized.")
 
 # Get the directory of the current script
 script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -136,6 +163,10 @@ with open(json_output_path, "w", encoding="utf-8") as json_file:
 # Log completion
 log("Data collection and processing complete.")
 log("Scraped data saved to 'compiled_characters.json'.")
+
+log("Uploading data to Firestore...")
+upload_to_firestore(compiled_characters.values(), "characters")
+log("Data uploaded to Firestore successfully.")
 
 
 # Optionally: Create a list of most common abilities (tag cloud)

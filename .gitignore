@@ -10,6 +10,8 @@ npm-debug.log
 yarn-error.log
 
 # Firebase service account keys and config files
+fire-keys/
+firebase-service-account-key.json
 firebase-service-account.json
 firebase-config.json
 
